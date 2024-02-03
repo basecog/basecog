@@ -1,0 +1,32 @@
+<%# locals: (project:, environment:, api_key:) %>
+
+<div id="<%= dom_id api_key %>">
+  <div class="mb-8">
+    <h1 class="h1"><%= api_key.name %></h1>
+  </div>
+
+  <div class="mb-8">
+    <div class="mb-1 font-bold">Description</div>
+    <div>
+      <% if api_key.description.present? %>
+        <%= api_key.description %>
+      <% else %>
+        <span class="italic">No description provided.</span>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="mb-8 inline-block rounded-lg border border-slate-200 font-mono px-3 py-2">
+    <div class="flex items-center justify-start gap-2 ">
+      <label>
+        <input
+          data-clipboard-target="source"
+          value="<%= api_key.key %>"
+          class="bg-white text-sm w-96"
+          disabled
+        >
+      </label>
+      <%= render "copy_to_clipboard", content: api_key.key %>
+    </div>
+  </div>
+</div>

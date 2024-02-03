@@ -1,0 +1,19 @@
+<div class="w-full">
+  <div class="mb-8 flex items-center justify-between">
+    <h1 class="h1">Feature flags</h1>
+    <div>
+      <%= link_to "+ New feature flag", new_project_feature_flag_path(@project), class: "btn-primary" %>
+    </div>
+  </div>
+
+  <div class="min-w-full">
+    <% if @feature_flags.any? %>
+      <%= render "feature_flag_list", project: @project, feature_flags: @feature_flags %>
+    <% else %>
+      <div class="mx-auto my-16 max-w-sm text-center">
+        <div class="my-4 text-lg text-gray-800">No feature flags, yet.</div>
+        <%= link_to "Create a feature flag", new_project_feature_flag_path(@project), class: "inline-block btn-primary" %>
+      </div>
+    <% end %>
+  </div>
+</div>

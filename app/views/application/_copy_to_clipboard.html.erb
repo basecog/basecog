@@ -1,0 +1,18 @@
+<%# locals: (content:) %>
+
+<div
+  data-controller="clipboard"
+  data-clipboard-content-value="<%= content %>"
+  class="flex items-center justify-start gap-2"
+>
+  <button
+    data-action="clipboard#copy"
+    data-clipboard-target="button"
+    class="w-8 rounded-3xl p-2 text-gray-700 hover:bg-gray-100"
+  >
+    <%= inline_asset "icons/copy.svg" %>
+  </button>
+  <div data-clipboard-target="successButton" class="hidden">
+    <%= inline_asset "icons/check.svg" %>
+  </div>
+</div>

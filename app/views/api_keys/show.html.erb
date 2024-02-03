@@ -1,0 +1,15 @@
+<div class="mx-auto w-full">
+  <div class="mx-auto">
+    <%= link_to "<- Back to environment", [ @project, @environment ], class: "btn-secondary mb-4" %>
+
+    <%= render "api_key", project: @project, environment: @environment, api_key: @api_key %>
+
+    <%=
+      button_to "Delete this API key",
+                [ @project, @environment, @api_key ],
+                method: :delete,
+                data: { turbo_confirm: "Are you sure?" },
+                class: "btn-danger"
+    %>
+  </div>
+</div>

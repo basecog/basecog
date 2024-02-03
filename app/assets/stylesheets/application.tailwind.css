@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .h1 {
+    @apply text-2xl font-semibold;
+  }
+
+  .btn-primary {
+    @apply inline-block rounded-full bg-gradient-to-r from-indigo-500 to-indigo-600 px-3 py-2 text-sm font-medium text-white hover:cursor-pointer hover:from-indigo-700 hover:to-indigo-700;
+  }
+
+  .btn-secondary {
+    @apply inline-block rounded-full bg-gray-100 px-3 py-2 text-sm font-medium text-gray-800 hover:cursor-pointer hover:bg-gray-200;
+  }
+
+  .btn-danger {
+    @apply inline-block rounded-full bg-gray-100 px-3 py-2 text-sm font-medium text-red-700 hover:cursor-pointer hover:bg-red-700 hover:text-white;
+  }
+
+  .card {
+    @apply inline-block rounded-lg border border-slate-200 bg-white px-5 py-5 shadow-md hover:shadow-lg;
+  }
+}

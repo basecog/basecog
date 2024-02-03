@@ -1,0 +1,31 @@
+<div class="w-full">
+  <div class="mb-8 flex items-center justify-between">
+    <h1 class="h1">Projects</h1>
+    <%= link_to "+ New project", new_project_path, class: "btn-primary" %>
+  </div>
+
+  <div class="min-w-full">
+    <% if @projects.any? %>
+      <div class="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <% @projects.each do |project| %>
+          <a
+            href="<%= project_path(project) %>"
+            class="card"
+          >
+            <div class="truncate text-lg font-medium">
+              <%= project.name %>
+            </div>
+            <div class="text-sm text-gray-600 mt-2.5">
+              <%= display_number_of_feature_flags(project) %>
+            </div>
+          </a>
+       <% end %>
+      </div>
+    <% else %>
+      <div class="mx-auto my-16 max-w-sm text-center">
+        <div class="my-4 text-lg text-gray-800">No projects, yet.</div>
+        <%= link_to "Create a project", new_project_path, class: "inline-block btn-primary" %>
+      </div>
+    <% end %>
+  </div>
+</div>

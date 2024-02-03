@@ -1,0 +1,15 @@
+<div data-controller="dropdown" class="relative">
+  <button
+    type="button"
+    data-action="click->dropdown#toggle click@window->dropdown#hide"
+    class="w-8 rounded-3xl p-2 text-gray-700 hover:bg-gray-100"
+  >
+    <%= inline_asset "icons/dots.svg" %>
+  </button>
+  <div
+    data-dropdown-target="menu"
+    class="absolute right-0 z-50 hidden max-h-56 w-24 overflow-y-scroll rounded-lg border border-slate-200 bg-white py-2 shadow-md shadow-gray-300"
+  >
+    <%= yield %>
+  </div>
+</div>

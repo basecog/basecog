@@ -1,0 +1,28 @@
+<div class="w-full">
+  <div class="mb-8 flex items-center justify-between">
+    <h1 class="h1">Environments</h1>
+    <%= link_to "+ New environment", new_project_environment_path(@project), class: "btn-primary" %>
+  </div>
+
+  <div class="min-w-full">
+    <% if @environments.any? %>
+      <div class="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <% @environments.each do |environment| %>
+          <a
+            href="<%= project_environment_path(@project, environment) %>"
+            class="card"
+          >
+            <div class="truncate text-lg font-medium">
+              <%= environment.name %>
+            </div>
+          </a>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="mx-auto my-16 max-w-sm text-center">
+        <div class="my-4 text-lg text-gray-800">No environments, yet.</div>
+        <%= link_to "Create an environment", new_project_environment_path(@project), class: "inline-block btn-primary" %>
+      </div>
+    <% end %>
+  </div>
+</div>

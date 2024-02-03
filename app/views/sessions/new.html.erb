@@ -1,0 +1,29 @@
+<div class="mx-auto my-12 w-full max-w-sm">
+  <div class="mt-4 mb-8 flex h-6 justify-center">
+    <%= inline_asset "logo.svg" %>
+  </div>
+  <h1 class="text-center text-3xl">Welcome back</h1>
+  <div class="m-auto mt-4 w-full max-w-xs">
+    <%= form_with url: login_path do |f| %>
+      <% if flash[:alert] %>
+        <p class="m-auto rounded-lg border-2 border-red-200 bg-red-50 px-4 py-2 text-center text-red-500">
+          <%= flash[:alert] %>
+        </p>
+      <% end %>
+
+      <div class="my-2 flex flex-col">
+        <%= f.label :email, class: "my-2" %>
+        <%= f.email_field :email, class: "bg-gray-50 border border-gray-300 text-gray-900 text-md rounded-lg focus:ring-blue-200 focus:border-blue-200 focus:ring-2 block w-full max-w-xs p-2.5" %>
+      </div>
+
+      <div class="my-2 flex flex-col blue-">
+        <%= f.label :password, class: "my-2" %>
+        <%= f.password_field :password, class: "bg-gray-50 border border-gray-300 text-gray-900 text-md rounded-lg focus:ring-blue-200 focus:border-blue-200 focus:ring-2 block w-full max-w-xs p-2.5" %>
+      </div>
+
+      <div class="my-6">
+        <%= f.submit "Sign in", class: "btn-primary w-full" %>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,34 @@
+<%# locals: (project:, feature_flag:) %>
+
+<%= form_with(model: [ project, feature_flag ], class: "contents") do |form| %>
+  <div class="my-5">
+    <%= form.label :key %>
+    <%=
+      form.text_field :key,
+                      autofocus: true,
+                      placeholder: "e.g. new_onboarding_flow or dark-mode",
+                      class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full"
+    %>
+
+    <% if feature_flag.errors[:key].any? %>
+      <div class="mt-3 font-medium text-red-500">
+        <%= feature_flag.errors.full_messages_for(:key).first %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :description, "Description (optional)" %>
+    <%= form.text_area :description, class: "block shadow rounded-md border border-slate-200 outline-none px-3 py-2 mt-2 w-full" %>
+
+    <% if feature_flag.errors[:description].any? %>
+      <div class="mt-3 font-medium text-red-500">
+        <%= feature_flag.errors.full_messages_for(:description).first %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="inline">
+    <%= form.submit class: "btn-primary" %>
+  </div>
+<% end %>

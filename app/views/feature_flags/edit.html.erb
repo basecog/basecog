@@ -1,0 +1,5 @@
+<div class="mx-auto w-full md:w-2/3">
+  <h1 class="h1">Edit feature flag</h1>
+  <%= render "form", project: @project, feature_flag: @feature_flag %>
+  <%= link_to "Cancel", [ @project, @feature_flag ], class: "ml-2 btn-secondary" %>
+</div>

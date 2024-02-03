@@ -1,0 +1,46 @@
+<%# locals: (project:, environment:, feature_flag:) %>
+
+<div class="w-full border-0 border-b border-b-slate-200 bg-slate-50 px-6 py-2">
+  <div class="flex items-center justify-between">
+    <div class="flex items-center gap-4">
+      <div class="h-7 py-1">
+        <a href="<%= root_path %>">
+          <%= inline_asset "logo.svg" %>
+        </a>
+      </div>
+      <% if project.present? %>
+        <%=
+          link_to project.name,
+                  project,
+                  class: "block px-2 py-1.5 hover:bg-slate-200 rounded-lg text-sm font-semibold"
+        %>
+      <% end %>
+    </div>
+
+    <div class="-mx-2 [&>.active]:bg-slate-200">
+      <%= button_to "Log out", logout_path, method: :delete, class: "block w-full text-left px-2 py-1.5 hover:bg-slate-200 rounded-lg text-sm" %>
+    </div>
+  </div>
+  <div class="-mx-2 mt-1 flex items-center justify-start gap-2 [&>.active]:bg-slate-200">
+    <% if project.present? && !current_page?(new_project_path) %>
+      <%=
+        navigation_link "Feature flags",
+                        project_feature_flags_path(project),
+                        class: "block px-2 py-1.5 rounded-lg text-sm hover:bg-slate-200",
+                        active: controller_name == "feature_flags"
+      %>
+      <%=
+        navigation_link "Environments",
+                        project_environments_path(project),
+                        class: "block px-2 py-1.5 rounded-lg text-sm hover:bg-slate-200",
+                        active: controller_name =~ /environments|api_keys/
+      %>
+      <%=
+        navigation_link "Settings",
+                        project_settings_path(project),
+                        class: "block px-2 py-1.5 rounded-lg text-sm hover:bg-slate-200",
+                        active: controller_name == "projects" && action_name == "settings"
+      %>
+    <% end %>
+  </div>
+</div>

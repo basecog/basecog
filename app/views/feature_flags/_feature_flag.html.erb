@@ -1,0 +1,116 @@
+<%# locals: (project:, feature_flag:) %>
+
+<div id="<%= dom_id feature_flag %>">
+  <div class="mb-8 flex items-center justify-start gap-2">
+    <h1
+      class="font-mono text-2xl font-semibold">
+      <%= feature_flag.key %>
+    </h1>
+    <%= render "copy_to_clipboard", content: feature_flag.key %>
+    <%= render "dropdown" do %>
+      <%=
+        link_to "Edit",
+                edit_project_feature_flag_path(project, feature_flag),
+                class: "block w-full text-sm text-left py-2 px-4 hover:bg-gray-100"
+      %>
+      <%=
+        button_to "Delete",
+                  project_feature_flag_path(project, feature_flag),
+                  method: :delete,
+                  data: { turbo_confirm: "Are you sure?" },
+                  class: "w-full text-sm text-left text-red-600 py-2 px-4 hover:bg-gray-100"
+      %>
+    <% end %>
+  </div>
+
+  <div class="mb-8">
+    <div class="mb-1 font-bold">Description</div>
+    <div>
+      <% if feature_flag.description.present? %>
+        <%= feature_flag.description %>
+      <% else %>
+        <span class="italic">No description provided.</span>
+      <% end %>
+    </div>
+  </div>
+
+  <h2 class="mb-4 text-2xl">Treatments</h2>
+
+  <div class="relative overflow-hidden overflow-x-auto rounded-lg border border-slate-200">
+    <table class="w-full table-fixed text-left text-sm">
+      <thead class="bg-slate-50 text-sm text-gray-700">
+      <tr>
+        <th scope="col" class="px-6 py-4">
+          Environment
+        </th>
+        <th scope="col" class="px-6 py-4">
+          Treatment
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <% project.environments.each do |environment| %>
+        <tr class="border-t border-slate-200 bg-white">
+          <th scope="row" class="truncate whitespace-nowrap px-6 py-3 font-medium text-gray-900">
+            <%= environment.name %>
+          </th>
+          <th scope="row" class="flex items-center justify-between truncate whitespace-nowrap px-6 py-3 font-medium text-gray-900">
+            <% if feature_flag.enabled?(environment) %>
+              <div class="inline-block rounded-full bg-emerald-50 px-2 py-1 font-medium text-emerald-700">
+                Enabled
+              </div>
+            <% else %>
+              <div class="inline-block rounded-full bg-gray-100 px-2 py-1 font-medium text-gray-500">
+                Disabled
+              </div>
+            <% end %>
+
+            <div data-controller="dropdown" class="relative">
+              <button
+                type="button"
+                data-action="click->dropdown#toggle click@window->dropdown#hide"
+                class="rounded-3xl p-2 text-gray-700 hover:bg-gray-100"
+              >
+                <%= inline_asset "icons/dots.svg" %>
+              </button>
+              <div
+                data-dropdown-target="menu"
+                class="fixed right-0 z-50 hidden max-h-56 w-48 overflow-y-scroll rounded-lg border border-slate-200 bg-white py-2 shadow-md shadow-gray-300"
+              >
+                <% if feature_flag.enabled?(environment) %>
+                  <% label = "Disable feature flag"; enabled = false %>
+                <% else %>
+                  <% label = "Enable feature flag"; enabled = true %>
+                <% end %>
+                <%=
+                  button_to label,
+                            project_treatments_path(@project, treatment: { enabled:, feature_flag_id: feature_flag.id, environment_id: environment.id }),
+                            data: { dropdown_target: :item },
+                            class: "w-full text-left py-2 px-4 hover:bg-gray-100"
+                %>
+              </div>
+            </div>
+          </th>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 class="mt-8 mb-4 text-2xl">Code example</h2>
+
+  <h3 class="mt-8 mb-4 text-xl">Bash</h3>
+
+  <div class="flex items-start justify-between overflow-x-scroll rounded-lg border border-slate-200 bg-slate-50 px-6 pt-4 font-mono text-sm">
+    <pre>
+curl -X POST '<%= "#{root_url}api/v0/decide" %>' \
+    -H 'Content-Type: application/json' \
+    -H 'Authorization: Bearer API_KEY' \
+    -d '{"key": "<%= feature_flag.key %>"}'
+    </pre>
+    <%=
+      render "copy_to_clipboard",
+             content: "curl -X POST '#{root_url}api/v0/decide' \\\n-H 'Content-Type: application/json' \\\n-H 'Authorization: Bearer API_KEY' \\\n-d '{\"key\": \"#{feature_flag.key}\"}'"
+    %>
+  </div>
+</div>

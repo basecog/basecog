@@ -1,0 +1,30 @@
+<div class="mx-auto w-full md:w-2/3">
+  <div class="mx-auto">
+    <div class="mb-8">
+      <h1 class="h1">Settings</h1>
+    </div>
+
+    <div class="mb-12">
+      <h2 class="text-xl">General</h2>
+      <%= render "form", project: @project %>
+    </div>
+
+    <h2 class="mb-4 text-xl font-semibold text-red-700">Danger Zone</h2>
+    <div class="rounded-lg border border-red-500 p-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <div class="font-bold">Delete this project</div>
+          <div class="text-sm text-gray-700">After you delete a project, you can't undo it. Please be careful.</div>
+        </div>
+        <div class="ml-2 inline-block">
+          <%=
+            button_to "Delete this project", project_path(@project),
+                      method: :delete,
+                      data: { turbo_confirm: "Are you sure?" },
+                      class: "btn-danger"
+          %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

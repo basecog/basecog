@@ -1,0 +1,57 @@
+<%# locals: (project:, feature_flags:) %>
+
+<div class="relative overflow-hidden overflow-x-auto rounded-lg border border-slate-200">
+  <table class="w-full table-auto text-left text-sm">
+    <thead class="bg-slate-50 text-sm text-gray-700">
+    <tr>
+      <th scope="col" class="px-6 py-4">
+        Key
+      </th>
+      <% project.environments.order(created_at: :asc).each do |environment| %>
+        <th scope="col" class="px-6 py-4">
+          <%= environment.name %>
+        </th>
+      <% end %>
+    </tr>
+    </thead>
+    <tbody>
+      <% feature_flags.each do |feature_flag| %>
+        <tr class="border-t border-slate-200 bg-white">
+          <th scope="row" class="truncate whitespace-nowrap px-6 py-3 font-medium text-gray-900">
+            <div data-controller="clipboard" class="flex items-center justify-start gap-2">
+              <%=
+                link_to feature_flag.key,
+                        project_feature_flag_path(project, feature_flag),
+                        data: { clipboard_target: "source" },
+                        class: "text-blue-600 hover:underline font-mono truncate max-w-96"
+              %>
+              <button
+                data-action="clipboard#copy"
+                data-clipboard-target="button"
+                class="w-9 rounded-3xl p-2 text-gray-700 hover:bg-gray-100"
+              >
+                <%= inline_asset "icons/copy.svg" %>
+              </button>
+              <div data-clipboard-target="successContent" class="hidden">
+                <%= inline_asset "icons/check.svg" %>
+              </div>
+            </div>
+          </th>
+          <% project.environments.order(created_at: :asc).each do |environment| %>
+            <td class="px-6 py-3 text-gray-600">
+              <% if feature_flag.enabled?(environment) %>
+                <div class="inline-block rounded-full bg-emerald-50 px-2 py-1 font-medium text-emerald-700">
+                  Enabled
+                </div>
+              <% else %>
+                <div class="inline-block rounded-full bg-gray-100 px-2 py-1 font-medium text-gray-500">
+                  Disabled
+                </div>
+              <% end %>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,64 @@
+<%# locals: (project:, environment:) %>
+
+<div id="<%= dom_id environment %>">
+  <div class="mb-8 flex items-center justify-start gap-2">
+    <h1 class="h1"><%= environment.name %></h1>
+    <%= render "dropdown" do %>
+      <%=
+        link_to "Edit",
+                edit_project_environment_path(project, environment),
+                class: "block w-full text-sm text-left py-2 px-4 hover:bg-gray-100"
+      %>
+      <%=
+        button_to "Delete",
+                  project_environment_path(project, environment),
+                  method: :delete,
+                  data: { turbo_confirm: "Are you sure?" },
+                  class: "w-full text-sm text-left text-red-600 py-2 px-4 hover:bg-gray-100"
+      %>
+    <% end %>
+  </div>
+
+  <div class="mb-8">
+    <div class="mb-1 font-bold">Description</div>
+    <div>
+      <% if environment.description.present? %>
+        <%= environment.description %>
+      <% else %>
+        <span class="italic">No description provided.</span>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="mb-8">
+    <div class="mt-8 mb-4 flex items-center justify-between">
+      <h2 class="text-xl">API keys</h2>
+      <%= link_to "New API key", new_project_environment_api_key_path(project, environment), class: "btn-secondary" %>
+    </div>
+
+    <% if environment.api_keys.any? %>
+      <div class="rounded-lg border border-slate-200 bg-white">
+        <% environment.api_keys.each do |api_key| %>
+          <div class="flex items-center justify-between border-b border-slate-200 px-4 py-2.5 last:border-0">
+            <div>
+              <%= link_to api_key.name, [ project, environment, api_key ], class: "block font-semibold text-blue-600 hover:underline" %>
+              <span class="block text-sm text-gray-700">
+                <%= api_key.description %>
+              </span>
+            </div>
+            <div>
+              <%=
+                button_to "Delete", [ project, environment, api_key ],
+                          method: :delete,
+                          data: { turbo_confirm: "Are you sure?" },
+                          class: "btn-danger py-2 px-4"
+              %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p>No API keys</p>
+    <% end %>
+  </div>
+</div>

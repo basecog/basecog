@@ -1,0 +1,5 @@
+<div class="mx-auto w-full md:w-2/3">
+  <h1 class="h1">Edit environment</h1>
+  <%= render "form", project: @project, environment: @environment %>
+  <%= link_to "Cancel", [ @project, @environment ], class: "ml-2 btn-secondary" %>
+</div>

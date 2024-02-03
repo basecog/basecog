@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html class="h-full" lang="en">
+  <head>
+    <title>Basecog</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body class="bg-white h-full">
+    <% if Current.user %>
+      <%= render "notice", message: notice if notice.present? %>
+      <%= render "alert", message: alert if alert.present? %>
+    <% end %>
+
+    <% if Current.user %>
+      <%= render "header", project: @project, environment: @environment, feature_flag: @feature_flag %>
+    <% end %>
+    <div class="container mx-auto mt-6 flex px-6">
+      <%= yield %>
+    </div>
+  </body>
+</html>

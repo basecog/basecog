@@ -1,0 +1,36 @@
+<div class="mx-auto w-full md:w-2/3">
+  <h1 class="h1">New API key</h1>
+
+  <%= form_with model: [ @project, @environment, @api_key ] do |form| %>
+    <div class="my-5">
+      <%= form.label :name %>
+      <%=
+        form.text_field :name,
+                        autofocus: true,
+                        class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full"
+      %>
+
+      <% if @api_key.errors[:name].any? %>
+        <div class="mt-3 font-medium text-red-500">
+          <%= @api_key.errors.full_messages_for(:name).first %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="my-5">
+      <%= form.label :description, "Description (optional)" %>
+      <%= form.text_area :description, class: "block shadow rounded-md border border-slate-200 outline-none px-3 py-2 mt-2 w-full" %>
+
+      <% if @api_key.errors[:description].any? %>
+        <div class="mt-3 font-medium text-red-500">
+          <%= @api_key.errors.full_messages_for(:description).first %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="inline">
+      <%= form.submit "Create API key", class: "btn-primary" %>
+    </div>
+  <% end %>
+
+</div>
