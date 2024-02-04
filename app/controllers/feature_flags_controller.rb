@@ -3,7 +3,7 @@ class FeatureFlagsController < ApplicationController
   before_action :set_feature_flag, only: %i[ show edit update destroy ]
 
   def index
-    @feature_flags = @project.feature_flags.all
+    @feature_flags = @project.feature_flags.all.ordered
   end
 
   def show; end
