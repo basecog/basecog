@@ -8,4 +8,6 @@ class Project < ApplicationRecord
   after_create do
     %w[Test Production].each { |name| environments.create! name: }
   end
+
+  scope :ordered, -> { order(name: :asc) }
 end

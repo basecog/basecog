@@ -2,7 +2,7 @@ class ProjectsController < ApplicationController
   before_action :set_project, only: %i[ show update destroy settings ]
 
   def index
-    @projects = Current.user.projects.all.order(name: :asc)
+    @projects = Current.user.projects.all.ordered
   end
 
   def show

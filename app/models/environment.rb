@@ -4,4 +4,6 @@ class Environment < ApplicationRecord
   has_many :api_keys
 
   validates :name, presence: true
+
+  scope :ordered, -> { order(created_at: :asc) }
 end

@@ -7,7 +7,7 @@
       <th scope="col" class="px-6 py-4">
         Key
       </th>
-      <% project.environments.order(created_at: :asc).each do |environment| %>
+      <% project.environments.ordered.each do |environment| %>
         <th scope="col" class="px-6 py-4">
           <%= environment.name %>
         </th>
@@ -37,7 +37,7 @@
               </div>
             </div>
           </th>
-          <% project.environments.order(created_at: :asc).each do |environment| %>
+          <% project.environments.ordered.each do |environment| %>
             <td class="px-6 py-3 text-gray-600">
               <% if feature_flag.enabled?(environment) %>
                 <div class="inline-block rounded-full bg-emerald-50 px-2 py-1 font-medium text-emerald-700">
