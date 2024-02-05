@@ -2,7 +2,7 @@ class SessionsController < ApplicationController
   skip_before_action :authenticate, only: %i[ new create ]
 
   def new
-    redirect_to root_path if Current.user
+    redirect_to root_path if user_signed_in?
   end
 
   def create

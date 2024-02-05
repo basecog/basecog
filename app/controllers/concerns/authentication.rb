@@ -4,6 +4,8 @@ module Authentication
   included do
     before_action :set_current_user
     before_action :authenticate
+
+    helper_method :user_signed_in?
   end
 
   private
@@ -13,6 +15,10 @@ module Authentication
   end
 
   def authenticate
-    redirect_to login_path unless Current.user
+    redirect_to login_path unless user_signed_in?
+  end
+
+  def user_signed_in?
+    Current.user.present?
   end
 end

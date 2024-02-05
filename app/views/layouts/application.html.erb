@@ -11,12 +11,12 @@
   </head>
 
   <body class="bg-white h-full">
-    <% if Current.user %>
+    <% if user_signed_in? %>
       <%= render "notice", message: notice if notice.present? %>
       <%= render "alert", message: alert if alert.present? %>
     <% end %>
 
-    <% if Current.user %>
+    <% if user_signed_in? %>
       <%= render "header", project: @project, environment: @environment, feature_flag: @feature_flag %>
     <% end %>
     <div class="container mx-auto mt-6 flex px-6">
