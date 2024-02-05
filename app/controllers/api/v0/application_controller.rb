@@ -1,7 +1,7 @@
 class Api::V0::ApplicationController < ApplicationController
   protect_from_forgery with: :null_session
 
-  skip_before_action :authenticate
+  skip_before_action :authenticate_user!
   before_action :set_environment
 
   private

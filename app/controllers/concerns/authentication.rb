@@ -3,7 +3,7 @@ module Authentication
 
   included do
     before_action :set_current_user
-    before_action :authenticate
+    before_action :authenticate_user!
 
     helper_method :user_signed_in?
   end
@@ -14,7 +14,7 @@ module Authentication
     Current.user = User.find_by(id: cookies.encrypted[:user_session])
   end
 
-  def authenticate
+  def authenticate_user!
     redirect_to login_path unless user_signed_in?
   end
 
