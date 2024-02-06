@@ -1,4 +1,6 @@
 class ApiKey < ApplicationRecord
+  attr_readonly :key
+
   belongs_to :environment
 
   before_create :generate_key
