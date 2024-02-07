@@ -3,9 +3,9 @@ class ApiKey < ApplicationRecord
 
   belongs_to :environment
 
-  before_create :generate_key
-
   validates :name, presence: true, uniqueness: { scope: :environment_id, message: "is already taken" }
+
+  before_create :generate_key
 
   private
 

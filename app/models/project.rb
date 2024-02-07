@@ -5,9 +5,13 @@ class Project < ApplicationRecord
 
   validates :name, presence: true
 
-  after_create do
-    %w[Test Production].each { |name| environments.create! name: }
-  end
+  after_create :init_project
 
   scope :ordered, -> { order(name: :asc) }
+
+  private
+
+  def init_project
+    %w[Test Production].each { |name| environments.create! name: }
+  end
 end
