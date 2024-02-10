@@ -25,16 +25,7 @@
                         data: { clipboard_target: "source" },
                         class: "text-blue-600 hover:underline font-mono truncate max-w-96"
               %>
-              <button
-                data-action="clipboard#copy"
-                data-clipboard-target="button"
-                class="w-9 rounded-3xl p-2 text-gray-700 hover:bg-gray-100"
-              >
-                <%= inline_asset "icons/copy.svg" %>
-              </button>
-              <div data-clipboard-target="successContent" class="hidden">
-                <%= inline_asset "icons/check.svg" %>
-              </div>
+              <%= render "copy_to_clipboard", content: feature_flag.key %>
             </div>
           </th>
           <% project.environments.ordered.each do |environment| %>
